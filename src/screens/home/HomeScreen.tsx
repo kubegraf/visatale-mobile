@@ -14,7 +14,10 @@ import { Pill } from '../../components/ui/Pill';
 import { Ring } from '../../components/ui/Ring';
 import { Stat } from '../../components/ui/Stat';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { MainTabsParams } from '../../navigation/MainTabs';
+import { RootStackParams } from '../../navigation/AppNavigator';
 import {
   FlightIcon,
   DocumentIcon,
@@ -29,11 +32,11 @@ type Props = BottomTabScreenProps<MainTabsParams, 'Home'>;
 
 type QuickActionIconKey = 'flight' | 'document' | 'chat' | 'globe';
 
-const QUICK_ACTIONS: { iconKey: QuickActionIconKey; label: string; color: string }[] = [
-  { iconKey: 'flight', label: 'New Application', color: Colors.teal },
-  { iconKey: 'document', label: 'Upload Docs', color: Colors.emerald },
-  { iconKey: 'chat', label: 'Chat Expert', color: '#6366F1' },
-  { iconKey: 'globe', label: 'Country Guide', color: Colors.amber },
+const QUICK_ACTIONS: { iconKey: QuickActionIconKey; label: string; color: string; route: keyof RootStackParams }[] = [
+  { iconKey: 'flight', label: 'New Application', color: Colors.teal, route: 'ApplyStep2' },
+  { iconKey: 'document', label: 'Upload Docs', color: Colors.emerald, route: 'DocUpload' },
+  { iconKey: 'chat', label: 'Chat Expert', color: '#6366F1', route: 'Conversation' },
+  { iconKey: 'globe', label: 'Country Guide', color: Colors.amber, route: 'AppDetail' },
 ];
 
 function QuickActionIcon({ iconKey, color }: { iconKey: QuickActionIconKey; color: string }) {
@@ -89,6 +92,8 @@ const RECENT_ACTIVITY = [
 ];
 
 export const HomeScreen: React.FC<Props> = ({ navigation }) => {
+  const rootNav = useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ScrollView
@@ -101,13 +106,14 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
             <Text style={styles.greeting}>Good morning 👋</Text>
             <Text style={styles.userName}>Priya Sharma</Text>
           </View>
-          <TouchableOpacity style={styles.notifBtn} activeOpacity={0.8}>
+          <TouchableOpacity style={styles.notifBtn} activeOpacity={0.8} onPress={() => rootNav.navigate('Notifications')}>
             <BellIcon size={20} color={Colors.ink} />
             <View style={styles.notifBadge} />
           </TouchableOpacity>
         </View>
 
         {/* Hero card */}
+        <TouchableOpacity activeOpacity={0.95} onPress={() => rootNav.navigate('AppDetail', { applicationId: 'VT-2024-08421' })}>
         <LinearGradient
           colors={[Colors.teal, Colors.tealDark, '#064E3B']}
           start={{ x: 0, y: 0 }}
@@ -166,7 +172,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
                 <Text style={styles.onlineText}>online · typing…</Text>
               </View>
             </View>
-            <TouchableOpacity style={styles.chatBtn} activeOpacity={0.85}>
+            <TouchableOpacity style={styles.chatBtn} activeOpacity={0.85} onPress={() => rootNav.navigate('Conversation', { name: 'Ananya' })}>
               <Text style={styles.chatBtnLabel}>Chat</Text>
             </TouchableOpacity>
           </View>
@@ -175,6 +181,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
           <View style={styles.heroDecor1} />
           <View style={styles.heroDecor2} />
         </LinearGradient>
+        </TouchableOpacity>
 
         {/* Stats pair */}
         <View style={styles.statsRow}>
@@ -204,7 +211,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
         </View>
         <View style={styles.quickGrid}>
           {QUICK_ACTIONS.map((action, i) => (
-            <TouchableOpacity key={i} style={styles.quickCard} activeOpacity={0.8}>
+            <TouchableOpacity key={i} style={styles.quickCard} activeOpacity={0.8} onPress={() => rootNav.navigate(action.route as any)}>
               <View
                 style={[
                   styles.quickIconWrap,
@@ -221,7 +228,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
         {/* Trending destinations */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Trending Destinations</Text>
-          <TouchableOpacity activeOpacity={0.7}>
+          <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Apply')}>
             <Text style={styles.seeAll}>See all</Text>
           </TouchableOpacity>
         </View>
@@ -231,7 +238,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
           contentContainerStyle={styles.trendingScroll}
         >
           {TRENDING.map((d, i) => (
-            <TouchableOpacity key={i} style={styles.destCard} activeOpacity={0.8}>
+            <TouchableOpacity key={i} style={styles.destCard} activeOpacity={0.8} onPress={() => rootNav.navigate('EligibilityPass', { country: d.name })}>
               <Text style={styles.destFlag}>{d.flag}</Text>
               <Text style={styles.destName}>{d.name}</Text>
               <Pill label={d.tag} tone={d.tone} size="sm" />
