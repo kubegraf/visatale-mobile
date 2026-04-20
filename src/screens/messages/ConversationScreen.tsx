@@ -12,7 +12,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
-import { ChevronLeft, PhoneIcon, PaperclipIcon } from '../../components/ui/Icons';
+import { ScreenHeader } from '../../components/ui/ScreenHeader';
+import { PhoneIcon, PaperclipIcon } from '../../components/ui/Icons';
 
 interface Message {
   id: string;
@@ -96,11 +97,9 @@ export const ConversationScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
+      <ScreenHeader title="Ananya" />
       {/* Chat header */}
       <View style={styles.chatHeader}>
-        <TouchableOpacity style={styles.backBtn} activeOpacity={0.7}>
-          <ChevronLeft size={24} color={Colors.teal} />
-        </TouchableOpacity>
         <View style={styles.headerAvatar}>
           <View style={styles.headerAvatarCircle}>
             <Text style={styles.headerAvatarText}>AP</Text>

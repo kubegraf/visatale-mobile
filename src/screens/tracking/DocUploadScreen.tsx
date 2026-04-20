@@ -10,6 +10,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
+import { ScreenHeader } from '../../components/ui/ScreenHeader';
 import { Pill } from '../../components/ui/Pill';
 import { Btn } from '../../components/ui/Btn';
 import {
@@ -68,6 +69,7 @@ export const DocUploadScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
+      <ScreenHeader title="Documents" />
       <View style={styles.header}>
         <Text style={styles.heading}>Upload Documents</Text>
         <Text style={styles.subheading}>UAE Tourist Visa · 6 documents required</Text>

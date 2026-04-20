@@ -9,12 +9,12 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
+import { ScreenHeader } from '../../components/ui/ScreenHeader';
 import { Btn } from '../../components/ui/Btn';
 import { Field } from '../../components/ui/Field';
 import {
   CreditCardIcon,
   BankIcon,
-  ChevronLeft,
   ShieldIcon,
   LockIcon,
 } from '../../components/ui/Icons';
@@ -62,13 +62,7 @@ export const PaymentScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
-      <View style={styles.header}>
-        <TouchableOpacity activeOpacity={0.7}>
-          <ChevronLeft size={24} color={Colors.teal} />
-        </TouchableOpacity>
-        <Text style={styles.heading}>Checkout</Text>
-        <View style={{ width: 32 }} />
-      </View>
+      <ScreenHeader title="Checkout" />
 
       <ScrollView
         contentContainerStyle={styles.scroll}
@@ -264,21 +258,6 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: Colors.canvas,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingVertical: 14,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
-    backgroundColor: Colors.white,
-  },
-  heading: {
-    fontSize: FontSizes.md,
-    fontFamily: 'SpaceGrotesk_700Bold',
-    color: Colors.ink,
   },
   scroll: {
     padding: 20,

@@ -9,6 +9,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
+import { ScreenHeader } from '../../components/ui/ScreenHeader';
 import { Btn } from '../../components/ui/Btn';
 import { Pill } from '../../components/ui/Pill';
 import { ChatBubbleIcon, GlobeIcon, WarningIcon, PassportIcon } from '../../components/ui/Icons';
@@ -57,7 +58,8 @@ function NextStepIcon({ iconKey }: { iconKey: NextStepIconKey }) {
 
 export const EligibilityFailScreen: React.FC = () => {
   return (
-    <SafeAreaView style={styles.safe} edges={['bottom']}>
+    <SafeAreaView style={styles.safe} edges={['top']}>
+      <ScreenHeader title="Eligibility Check" />
       <ScrollView
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}

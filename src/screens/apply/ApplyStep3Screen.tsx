@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
+import { ScreenHeader } from '../../components/ui/ScreenHeader';
 import { Btn } from '../../components/ui/Btn';
 import { Pill } from '../../components/ui/Pill';
 import { BankIcon } from '../../components/ui/Icons';
@@ -76,6 +77,7 @@ export const ApplyStep3Screen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
+      <ScreenHeader title="New Application" />
       <View style={styles.header}>
         <Text style={styles.heading}>Choose Your Plan</Text>
         <View style={styles.stepper}>

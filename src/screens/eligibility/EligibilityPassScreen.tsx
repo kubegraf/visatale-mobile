@@ -9,6 +9,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
+import { ScreenHeader } from '../../components/ui/ScreenHeader';
 import { Btn } from '../../components/ui/Btn';
 import { Pill } from '../../components/ui/Pill';
 
@@ -22,7 +23,8 @@ const REQUIREMENTS = [
 
 export const EligibilityPassScreen: React.FC = () => {
   return (
-    <SafeAreaView style={styles.safe} edges={['bottom']}>
+    <SafeAreaView style={styles.safe} edges={['top']}>
+      <ScreenHeader title="Eligibility Check" />
       <ScrollView
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}

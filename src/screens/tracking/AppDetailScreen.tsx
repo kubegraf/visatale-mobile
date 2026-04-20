@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
+import { ScreenHeader } from '../../components/ui/ScreenHeader';
 import { Pill } from '../../components/ui/Pill';
 import { Ring } from '../../components/ui/Ring';
 import { Btn } from '../../components/ui/Btn';
@@ -89,6 +90,7 @@ export const AppDetailScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
+      <ScreenHeader title="Application Detail" />
       {/* Header gradient */}
       <LinearGradient
         colors={[Colors.teal, Colors.tealDark]}

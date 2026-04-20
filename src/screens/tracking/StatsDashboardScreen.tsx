@@ -8,6 +8,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
+import { ScreenHeader } from '../../components/ui/ScreenHeader';
 import { Ring } from '../../components/ui/Ring';
 import { AreaChart } from '../../components/ui/AreaChart';
 import { BarChart } from '../../components/ui/BarChart';
@@ -37,6 +38,7 @@ const HEATMAP_DATA = Array.from({ length: 12 }, (_, w) =>
 export const StatsDashboardScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
+      <ScreenHeader title="My Stats" />
       <ScrollView
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}

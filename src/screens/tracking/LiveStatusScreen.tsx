@@ -11,6 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Path, Circle, Text as SvgText, Line, G } from 'react-native-svg';
 import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
+import { ScreenHeader } from '../../components/ui/ScreenHeader';
 import { Pill } from '../../components/ui/Pill';
 import { BankIcon, SearchIcon, CheckIcon, DocumentIcon, FlightIcon } from '../../components/ui/Icons';
 
@@ -106,6 +107,7 @@ export const LiveStatusScreen: React.FC = () => {
   return (
     <View style={styles.darkBg}>
       <SafeAreaView style={styles.safe} edges={['top']}>
+        <ScreenHeader title="Live Status" />
         <ScrollView
           contentContainerStyle={styles.scroll}
           showsVerticalScrollIndicator={false}

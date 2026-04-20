@@ -9,6 +9,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
+import { ScreenHeader } from '../../components/ui/ScreenHeader';
 import { Btn } from '../../components/ui/Btn';
 
 const STEPS = ['Route', 'Profile', 'Plan'];
@@ -50,6 +51,7 @@ export const ApplyStep2Screen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
+      <ScreenHeader title="New Application" />
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.heading}>Traveller Profile</Text>

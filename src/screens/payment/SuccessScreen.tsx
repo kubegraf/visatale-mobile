@@ -8,9 +8,12 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
 import { Btn } from '../../components/ui/Btn';
+import { RootStackParams } from '../../navigation/AppNavigator';
 
 const CONFETTI_COLORS = [
   Colors.teal,
@@ -36,6 +39,7 @@ interface ConfettiPiece {
 }
 
 export const SuccessScreen: React.FC = () => {
+  const nav = useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const bounceAnim = useRef(new Animated.Value(0.5)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const confettiPieces = useRef<ConfettiPiece[]>(
@@ -191,7 +195,7 @@ export const SuccessScreen: React.FC = () => {
           </Animated.View>
 
           <Animated.View style={[styles.ctaSection, { opacity: fadeAnim }]}>
-            <Btn label="Track Application" onPress={() => {}} />
+            <Btn label="Track Application" onPress={() => nav.reset({ index: 0, routes: [{ name: 'Main' }] })} />
             <Btn label="Share with family" kind="ghost" onPress={() => {}} />
           </Animated.View>
         </View>
