@@ -120,6 +120,7 @@ export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
     <SafeAreaView style={styles.safe}>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.flex}>
         <ScrollView
+          style={styles.scrollView}
           contentContainerStyle={styles.scroll}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
@@ -253,7 +254,8 @@ export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: Colors.canvas },
   flex: { flex: 1 },
-  scroll: { paddingHorizontal: 24, paddingBottom: 40 },
+  scrollView: { flex: 1 },
+  scroll: { paddingHorizontal: 24, paddingBottom: 40, flexGrow: 1 },
   backBtn: { paddingTop: 8, paddingBottom: 8, alignSelf: 'flex-start' },
   backText: { fontSize: FontSizes.base, fontFamily: 'Inter_500Medium', color: Colors.teal },
   header: { marginBottom: 28, gap: 6 },

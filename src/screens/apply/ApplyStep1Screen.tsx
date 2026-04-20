@@ -91,6 +91,7 @@ export const ApplyStep1Screen: React.FC<Props> = ({ navigation }) => {
       </View>
 
       <ScrollView
+        style={styles.scrollView}
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
       >
@@ -293,6 +294,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.border,
     marginBottom: 20,
     marginHorizontal: 4,
+  },
+  scrollView: {
+    flex: 1,
   },
   scroll: {
     padding: 20,

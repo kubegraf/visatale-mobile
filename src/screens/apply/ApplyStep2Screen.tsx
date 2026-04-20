@@ -101,6 +101,7 @@ export const ApplyStep2Screen: React.FC = () => {
       </View>
 
       <ScrollView
+        style={styles.scrollView}
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
       >
@@ -257,6 +258,9 @@ const styles = StyleSheet.create({
   },
   stepConnectorDone: {
     backgroundColor: Colors.emerald,
+  },
+  scrollView: {
+    flex: 1,
   },
   scroll: {
     padding: 20,

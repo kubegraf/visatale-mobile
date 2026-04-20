@@ -144,6 +144,7 @@ export const TrackerScreen: React.FC<Props> = ({ navigation }) => {
       </ScrollView>
 
       <ScrollView
+        style={styles.scrollView}
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
       >
@@ -280,6 +281,9 @@ const styles = StyleSheet.create({
   },
   filterLabelActive: {
     color: Colors.white,
+  },
+  scrollView: {
+    flex: 1,
   },
   scroll: {
     paddingHorizontal: 20,

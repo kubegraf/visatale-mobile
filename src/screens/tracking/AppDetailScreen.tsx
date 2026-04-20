@@ -153,6 +153,7 @@ export const AppDetailScreen: React.FC = () => {
       </View>
 
       <ScrollView
+        style={styles.scrollView}
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
       >
@@ -369,6 +370,9 @@ const styles = StyleSheet.create({
   tabLabelActive: {
     fontFamily: 'Inter_600SemiBold',
     color: Colors.teal,
+  },
+  scrollView: {
+    flex: 1,
   },
   scroll: {
     padding: 20,

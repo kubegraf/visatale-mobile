@@ -107,6 +107,7 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ScrollView
+        style={styles.scrollView}
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
       >
@@ -222,6 +223,9 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: Colors.canvas,
+  },
+  scrollView: {
+    flex: 1,
   },
   scroll: {
     paddingBottom: 40,

@@ -97,6 +97,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ScrollView
+        style={styles.scrollView}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scroll}
       >
@@ -113,7 +114,6 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
         </View>
 
         {/* Hero card */}
-        <TouchableOpacity activeOpacity={0.95} onPress={() => rootNav.navigate('AppDetail', { applicationId: 'VT-2024-08421' })}>
         <LinearGradient
           colors={[Colors.teal, Colors.tealDark, '#064E3B']}
           start={{ x: 0, y: 0 }}
@@ -177,11 +177,19 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
             </TouchableOpacity>
           </View>
 
+          {/* View details link */}
+          <TouchableOpacity
+            style={styles.viewDetailsBtn}
+            activeOpacity={0.8}
+            onPress={() => rootNav.navigate('AppDetail', { applicationId: 'VT-2024-08421' })}
+          >
+            <Text style={styles.viewDetailsBtnLabel}>View details →</Text>
+          </TouchableOpacity>
+
           {/* Decorative */}
           <View style={styles.heroDecor1} />
           <View style={styles.heroDecor2} />
         </LinearGradient>
-        </TouchableOpacity>
 
         {/* Stats pair */}
         <View style={styles.statsRow}>
@@ -288,6 +296,9 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: Colors.canvas,
+  },
+  scrollView: {
+    flex: 1,
   },
   scroll: {
     paddingBottom: 24,
@@ -447,6 +458,17 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.xs,
     fontFamily: 'Inter_600SemiBold',
     color: Colors.white,
+  },
+  viewDetailsBtn: {
+    alignSelf: 'flex-end',
+    marginTop: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+  },
+  viewDetailsBtnLabel: {
+    fontSize: FontSizes.xs,
+    fontFamily: 'Inter_600SemiBold',
+    color: 'rgba(255,255,255,0.85)',
   },
   heroDecor1: {
     position: 'absolute',

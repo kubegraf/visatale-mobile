@@ -83,6 +83,7 @@ export const DocUploadScreen: React.FC = () => {
       </View>
 
       <ScrollView
+        style={styles.scrollView}
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
       >
@@ -303,6 +304,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter_600SemiBold',
     color: Colors.teal,
     width: 80,
+  },
+  scrollView: {
+    flex: 1,
   },
   scroll: {
     padding: 20,

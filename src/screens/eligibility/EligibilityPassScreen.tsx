@@ -26,6 +26,7 @@ export const EligibilityPassScreen: React.FC = () => {
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ScreenHeader title="Eligibility Check" />
       <ScrollView
+        style={styles.scrollView}
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
       >
@@ -129,6 +130,9 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: Colors.white,
+  },
+  scrollView: {
+    flex: 1,
   },
   scroll: {
     paddingHorizontal: 24,
