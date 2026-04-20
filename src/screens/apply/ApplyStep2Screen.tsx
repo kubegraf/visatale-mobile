@@ -114,7 +114,7 @@ export const ApplyStep2Screen: React.FC = () => {
               <View style={styles.cardHeaderInfo}>
                 <Text style={styles.cardName}>{t.name}</Text>
                 <Text style={styles.cardType}>
-                  {t.type === 'Primary' ? '🌟 Primary traveller' : '👤 Additional traveller'}
+                  {t.type === 'Primary' ? 'Primary traveller' : 'Additional traveller'}
                 </Text>
               </View>
               {i > 0 && (
@@ -151,7 +151,7 @@ export const ApplyStep2Screen: React.FC = () => {
 
             {/* Edit row */}
             <TouchableOpacity style={styles.editBtn} activeOpacity={0.7}>
-              <Text style={styles.editBtnLabel}>✏️ Edit details</Text>
+              <Text style={styles.editBtnLabel}>Edit details</Text>
             </TouchableOpacity>
           </View>
         ))}
@@ -170,7 +170,7 @@ export const ApplyStep2Screen: React.FC = () => {
 
         {/* Passport validity note */}
         <View style={styles.noteCard}>
-          <Text style={styles.noteIcon}>ℹ️</Text>
+          <View style={styles.noteDot} />
           <Text style={styles.noteText}>
             All passports must be valid for at least 6 months beyond the intended stay.
           </Text>
@@ -334,9 +334,8 @@ const styles = StyleSheet.create({
   },
   detailValue: {
     fontSize: FontSizes.sm,
-    fontFamily: 'Inter_600SemiBold',
-    color: Colors.ink,
     fontFamily: 'JetBrainsMono_400Regular',
+    color: Colors.ink,
   },
   editBtn: {
     backgroundColor: Colors.surface,
@@ -391,8 +390,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 12,
   },
-  noteIcon: {
-    fontSize: 16,
+  noteDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: Colors.amber,
+    marginTop: 4,
+    flexShrink: 0,
   },
   noteText: {
     flex: 1,

@@ -12,6 +12,7 @@ import { FontSizes } from '../../constants/typography';
 import { Pill } from '../../components/ui/Pill';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { MainTabsParams } from '../../navigation/MainTabs';
+import { DocumentIcon } from '../../components/ui/Icons';
 
 type Props = BottomTabScreenProps<MainTabsParams, 'Track'>;
 
@@ -205,7 +206,7 @@ export const TrackerScreen: React.FC<Props> = ({ navigation }) => {
 
         {filtered.length === 0 && (
           <View style={styles.emptyState}>
-            <Text style={styles.emptyIcon}>📋</Text>
+            <DocumentIcon size={48} color={Colors.muted} />
             <Text style={styles.emptyTitle}>No applications found</Text>
             <Text style={styles.emptySub}>
               {activeFilter !== 'All' ? `No ${activeFilter.toLowerCase()} applications` : 'Start your first application'}
@@ -378,9 +379,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 60,
     gap: 10,
-  },
-  emptyIcon: {
-    fontSize: 48,
   },
   emptyTitle: {
     fontSize: FontSizes.lg,

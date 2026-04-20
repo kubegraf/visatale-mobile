@@ -12,10 +12,23 @@ import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
 import { Btn } from '../../components/ui/Btn';
 
-const CONFETTI_ITEMS = ['🎊', '🎉', '✨', '🎈', '⭐', '🌟', '🎁', '💎', '🏆', '🌈'];
+const CONFETTI_COLORS = [
+  Colors.teal,
+  Colors.emerald,
+  Colors.amber,
+  '#6366F1',
+  '#EC4899',
+  '#F97316',
+  Colors.tealLight,
+  Colors.emeraldLight,
+  Colors.amberLight,
+  '#818CF8',
+];
+const CONFETTI_SHAPES = ['rect', 'circle', 'rect', 'circle', 'rect', 'rect', 'circle', 'rect', 'circle', 'rect'];
 
 interface ConfettiPiece {
-  emoji: string;
+  color: string;
+  shape: string;
   x: Animated.Value;
   y: Animated.Value;
   opacity: Animated.Value;
@@ -27,7 +40,8 @@ export const SuccessScreen: React.FC = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const confettiPieces = useRef<ConfettiPiece[]>(
     Array.from({ length: 16 }, (_, i) => ({
-      emoji: CONFETTI_ITEMS[i % CONFETTI_ITEMS.length],
+      color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
+      shape: CONFETTI_SHAPES[i % CONFETTI_SHAPES.length],
       x: new Animated.Value(Math.random() * 300 - 150),
       y: new Animated.Value(-40),
       opacity: new Animated.Value(1),
@@ -83,12 +97,13 @@ export const SuccessScreen: React.FC = () => {
         {/* Confetti */}
         <View style={styles.confettiContainer} pointerEvents="none">
           {confettiPieces.map((piece, i) => (
-            <Animated.Text
+            <Animated.View
               key={i}
               style={[
-                styles.confettiPiece,
+                piece.shape === 'circle' ? styles.confettiCircle : styles.confettiRect,
                 {
-                  left: `${30 + Math.random() * 40}%` as any,
+                  left: `${20 + (i / 16) * 60}%` as any,
+                  backgroundColor: piece.color,
                   transform: [
                     { translateX: piece.x },
                     { translateY: piece.y },
@@ -102,9 +117,7 @@ export const SuccessScreen: React.FC = () => {
                   opacity: piece.opacity,
                 },
               ]}
-            >
-              {piece.emoji}
-            </Animated.Text>
+            />
           ))}
         </View>
 
@@ -165,7 +178,7 @@ export const SuccessScreen: React.FC = () => {
             {/* Specialist card */}
             <View style={styles.specCard}>
               <View style={styles.specAvatar}>
-                <Text style={{ fontSize: 26 }}>👩</Text>
+                <Text style={styles.specAvatarText}>A</Text>
               </View>
               <View style={styles.specInfo}>
                 <Text style={styles.specName}>Ananya Patel is assigned</Text>
@@ -178,7 +191,7 @@ export const SuccessScreen: React.FC = () => {
           </Animated.View>
 
           <Animated.View style={[styles.ctaSection, { opacity: fadeAnim }]}>
-            <Btn label="📍 Track Application" onPress={() => {}} />
+            <Btn label="Track Application" onPress={() => {}} />
             <Btn label="Share with family" kind="ghost" onPress={() => {}} />
           </Animated.View>
         </View>
@@ -202,9 +215,18 @@ const styles = StyleSheet.create({
     bottom: 0,
     zIndex: 10,
   },
-  confettiPiece: {
+  confettiRect: {
     position: 'absolute',
-    fontSize: 22,
+    width: 10,
+    height: 6,
+    borderRadius: 2,
+    top: 0,
+  },
+  confettiCircle: {
+    position: 'absolute',
+    width: 8,
+    height: 8,
+    borderRadius: 4,
     top: 0,
   },
   content: {
@@ -342,11 +364,16 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.teal,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: Colors.border,
+  },
+  specAvatarText: {
+    fontSize: 20,
+    fontFamily: 'SpaceGrotesk_700Bold',
+    color: Colors.white,
   },
   specInfo: {
     flex: 1,

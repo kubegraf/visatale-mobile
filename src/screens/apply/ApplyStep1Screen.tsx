@@ -14,6 +14,7 @@ import { Btn } from '../../components/ui/Btn';
 import { Pill } from '../../components/ui/Pill';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { MainTabsParams } from '../../navigation/MainTabs';
+import { CalendarIcon, CheckIcon, InfoIcon } from '../../components/ui/Icons';
 
 type Props = BottomTabScreenProps<MainTabsParams, 'Apply'>;
 
@@ -160,7 +161,7 @@ export const ApplyStep1Screen: React.FC<Props> = ({ navigation }) => {
         <Text style={styles.sectionLabel}>Travel Dates</Text>
         <View style={styles.datesRow}>
           <TouchableOpacity style={styles.dateCard} activeOpacity={0.8}>
-            <Text style={styles.dateIcon}>📅</Text>
+            <CalendarIcon size={20} color={Colors.slate} />
             <View>
               <Text style={styles.dateLabelSm}>Departure</Text>
               <Text style={styles.dateValue}>Jun 15, 2025</Text>
@@ -168,7 +169,7 @@ export const ApplyStep1Screen: React.FC<Props> = ({ navigation }) => {
           </TouchableOpacity>
           <Text style={styles.dateDash}>→</Text>
           <TouchableOpacity style={styles.dateCard} activeOpacity={0.8}>
-            <Text style={styles.dateIcon}>📅</Text>
+            <CalendarIcon size={20} color={Colors.slate} />
             <View>
               <Text style={styles.dateLabelSm}>Return</Text>
               <Text style={styles.dateValue}>Jun 29, 2025</Text>
@@ -179,7 +180,7 @@ export const ApplyStep1Screen: React.FC<Props> = ({ navigation }) => {
         {/* AI Eligibility */}
         <View style={styles.aiCard}>
           <View style={styles.aiHeader}>
-            <Text style={styles.aiIcon}>🤖</Text>
+            <InfoIcon size={28} color={Colors.teal} />
             <View style={styles.aiHeaderText}>
               <Text style={styles.aiTitle}>AI Eligibility Check</Text>
               <Text style={styles.aiSub}>Instant check based on your profile</Text>
@@ -198,7 +199,7 @@ export const ApplyStep1Screen: React.FC<Props> = ({ navigation }) => {
           {eligibility === true && (
             <View style={styles.eligResult}>
               <View style={styles.eligPass}>
-                <Text style={styles.eligPassIcon}>✅</Text>
+                <CheckIcon size={24} color={Colors.emerald} />
                 <View>
                   <Text style={styles.eligPassTitle}>You're eligible!</Text>
                   <Text style={styles.eligPassSub}>
@@ -209,7 +210,7 @@ export const ApplyStep1Screen: React.FC<Props> = ({ navigation }) => {
               <View style={styles.eligDetails}>
                 {['Valid passport (6+ months)', 'Return ticket required', 'Hotel booking needed'].map((req, i) => (
                   <View key={i} style={styles.eligReq}>
-                    <Text style={styles.eligReqCheck}>✓</Text>
+                    <CheckIcon size={14} color={Colors.emerald} />
                     <Text style={styles.eligReqText}>{req}</Text>
                   </View>
                 ))}
@@ -391,9 +392,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.border,
   },
-  dateIcon: {
-    fontSize: 20,
-  },
   dateLabelSm: {
     fontSize: FontSizes.xs,
     fontFamily: 'Inter_400Regular',
@@ -422,9 +420,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
   },
-  aiIcon: {
-    fontSize: 28,
-  },
   aiHeaderText: {
     flex: 1,
   },
@@ -449,9 +444,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 12,
   },
-  eligPassIcon: {
-    fontSize: 24,
-  },
   eligPassTitle: {
     fontSize: FontSizes.base,
     fontFamily: 'Inter_700Bold',
@@ -470,10 +462,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-  },
-  eligReqCheck: {
-    fontSize: 14,
-    color: Colors.emerald,
   },
   eligReqText: {
     fontSize: FontSizes.sm,

@@ -3,13 +3,22 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
+import {
+  HomeIcon,
+  FlightIcon,
+  TrackIcon,
+  MessagesIcon,
+  ProfileIcon,
+} from './Icons';
 
-const TAB_ICONS: Record<string, string> = {
-  Home: '🏠',
-  Apply: '✈️',
-  Track: '📍',
-  Messages: '💬',
-  Profile: '👤',
+type IconComponent = ({ size, color }: { size?: number; color?: string }) => React.ReactElement;
+
+const TAB_ICON_MAP: Record<string, IconComponent> = {
+  Home: HomeIcon,
+  Apply: FlightIcon,
+  Track: TrackIcon,
+  Messages: MessagesIcon,
+  Profile: ProfileIcon,
 };
 
 export const TabBar: React.FC<BottomTabBarProps> = ({
@@ -39,6 +48,9 @@ export const TabBar: React.FC<BottomTabBarProps> = ({
             }
           };
 
+          const IconComponent = TAB_ICON_MAP[route.name];
+          const iconColor = isFocused ? Colors.teal : Colors.muted;
+
           return (
             <TouchableOpacity
               key={route.key}
@@ -52,7 +64,11 @@ export const TabBar: React.FC<BottomTabBarProps> = ({
                   isFocused && styles.iconWrapActive,
                 ]}
               >
-                <Text style={styles.icon}>{TAB_ICONS[route.name] || '●'}</Text>
+                {IconComponent ? (
+                  <IconComponent size={22} color={iconColor} />
+                ) : (
+                  <View style={[styles.fallbackDot, { backgroundColor: iconColor }]} />
+                )}
               </View>
               <Text
                 style={[
@@ -96,8 +112,10 @@ const styles = StyleSheet.create({
   iconWrapActive: {
     backgroundColor: Colors.surface,
   },
-  icon: {
-    fontSize: 20,
+  fallbackDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
   },
   tabLabel: {
     fontSize: FontSizes.xs,

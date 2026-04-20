@@ -13,6 +13,15 @@ import { FontSizes } from '../../constants/typography';
 import { Pill } from '../../components/ui/Pill';
 import { Ring } from '../../components/ui/Ring';
 import { Btn } from '../../components/ui/Btn';
+import {
+  PassportIcon,
+  CameraIcon,
+  BankIcon,
+  FlightIcon,
+  DocumentIcon,
+  ChatBubbleIcon,
+  PhoneIcon,
+} from '../../components/ui/Icons';
 
 const TIMELINE = [
   {
@@ -53,12 +62,24 @@ const TIMELINE = [
   },
 ];
 
-const DOCS = [
-  { name: 'Passport Copy', status: 'Verified', icon: '📗' },
-  { name: 'Passport Photo', status: 'Verified', icon: '📷' },
-  { name: 'Bank Statement', status: 'Under Review', icon: '🏦' },
-  { name: 'Flight Itinerary', status: 'Pending', icon: '✈️' },
-  { name: 'Hotel Booking', status: 'Pending', icon: '🏨' },
+type DocIconKey = 'passport' | 'camera' | 'bank' | 'flight' | 'document';
+
+function DocIcon({ iconKey, color }: { iconKey: DocIconKey; color: string }) {
+  switch (iconKey) {
+    case 'passport': return <PassportIcon size={24} color={color} />;
+    case 'camera': return <CameraIcon size={24} color={color} />;
+    case 'bank': return <BankIcon size={24} color={color} />;
+    case 'flight': return <FlightIcon size={24} color={color} />;
+    case 'document': return <DocumentIcon size={24} color={color} />;
+  }
+}
+
+const DOCS: { name: string; status: string; iconKey: DocIconKey }[] = [
+  { name: 'Passport Copy', status: 'Verified', iconKey: 'passport' },
+  { name: 'Passport Photo', status: 'Verified', iconKey: 'camera' },
+  { name: 'Bank Statement', status: 'Under Review', iconKey: 'bank' },
+  { name: 'Flight Itinerary', status: 'Pending', iconKey: 'flight' },
+  { name: 'Hotel Booking', status: 'Pending', iconKey: 'document' },
 ];
 
 const TABS = ['Timeline', 'Documents', 'Specialist'];
@@ -195,7 +216,10 @@ export const AppDetailScreen: React.FC = () => {
           <View style={styles.docList}>
             {DOCS.map((doc, i) => (
               <View key={i} style={styles.docRow}>
-                <Text style={styles.docIcon}>{doc.icon}</Text>
+                <DocIcon
+                  iconKey={doc.iconKey}
+                  color={doc.status === 'Verified' ? Colors.emerald : doc.status === 'Under Review' ? Colors.amber : Colors.muted}
+                />
                 <View style={styles.docInfo}>
                   <Text style={styles.docName}>{doc.name}</Text>
                 </View>
@@ -220,7 +244,7 @@ export const AppDetailScreen: React.FC = () => {
           <View style={styles.specialistSection}>
             <View style={styles.specialistCard}>
               <View style={styles.specAvatar}>
-                <Text style={styles.specAvatarEmoji}>👩</Text>
+                <Text style={styles.specAvatarText}>AP</Text>
               </View>
               <View style={styles.specInfo}>
                 <Text style={styles.specName}>Ananya Patel</Text>
@@ -243,8 +267,8 @@ export const AppDetailScreen: React.FC = () => {
                 </View>
               ))}
             </View>
-            <Btn label="💬 Chat with Ananya" onPress={() => {}} />
-            <Btn label="📞 Call Now" kind="outline" onPress={() => {}} />
+            <Btn label="Chat with Ananya" onPress={() => {}} />
+            <Btn label="Call Now" kind="outline" onPress={() => {}} />
           </View>
         )}
       </ScrollView>
@@ -441,9 +465,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.border,
   },
-  docIcon: {
-    fontSize: 24,
-  },
   docInfo: {
     flex: 1,
   },
@@ -469,14 +490,16 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: Colors.surface,
+    backgroundColor: Colors.teal,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
-    borderColor: Colors.teal,
+    borderColor: Colors.tealDark,
   },
-  specAvatarEmoji: {
-    fontSize: 32,
+  specAvatarText: {
+    fontSize: FontSizes.lg,
+    fontFamily: 'SpaceGrotesk_700Bold',
+    color: Colors.white,
   },
   specInfo: {
     flex: 1,

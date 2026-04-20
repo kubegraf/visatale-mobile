@@ -15,15 +15,46 @@ import { Ring } from '../../components/ui/Ring';
 import { Stat } from '../../components/ui/Stat';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { MainTabsParams } from '../../navigation/MainTabs';
+import {
+  FlightIcon,
+  DocumentIcon,
+  ChatBubbleIcon,
+  GlobeIcon,
+  BellIcon,
+  CheckIcon,
+  WarningIcon,
+} from '../../components/ui/Icons';
 
 type Props = BottomTabScreenProps<MainTabsParams, 'Home'>;
 
-const QUICK_ACTIONS = [
-  { icon: '✈️', label: 'New Application', color: Colors.teal },
-  { icon: '📄', label: 'Upload Docs', color: Colors.emerald },
-  { icon: '💬', label: 'Chat Expert', color: '#6366F1' },
-  { icon: '🗺️', label: 'Country Guide', color: Colors.amber },
+type QuickActionIconKey = 'flight' | 'document' | 'chat' | 'globe';
+
+const QUICK_ACTIONS: { iconKey: QuickActionIconKey; label: string; color: string }[] = [
+  { iconKey: 'flight', label: 'New Application', color: Colors.teal },
+  { iconKey: 'document', label: 'Upload Docs', color: Colors.emerald },
+  { iconKey: 'chat', label: 'Chat Expert', color: '#6366F1' },
+  { iconKey: 'globe', label: 'Country Guide', color: Colors.amber },
 ];
+
+function QuickActionIcon({ iconKey, color }: { iconKey: QuickActionIconKey; color: string }) {
+  switch (iconKey) {
+    case 'flight': return <FlightIcon size={20} color={color} />;
+    case 'document': return <DocumentIcon size={20} color={color} />;
+    case 'chat': return <ChatBubbleIcon size={20} color={color} />;
+    case 'globe': return <GlobeIcon size={20} color={color} />;
+  }
+}
+
+type ActivityIconType = 'check' | 'document' | 'warning';
+
+function ActivityIcon({ iconType, positive }: { iconType: ActivityIconType; positive: boolean }) {
+  const color = positive ? Colors.emerald : Colors.amber;
+  switch (iconType) {
+    case 'check': return <CheckIcon size={18} color={color} />;
+    case 'document': return <DocumentIcon size={18} color={color} />;
+    case 'warning': return <WarningIcon size={18} color={color} />;
+  }
+}
 
 const TRENDING = [
   { flag: '🇦🇪', name: 'Dubai', tag: 'Free', tone: 'emerald' as const },
@@ -35,21 +66,21 @@ const TRENDING = [
 
 const RECENT_ACTIVITY = [
   {
-    icon: '✅',
+    iconType: 'check' as const,
     title: 'Document verified',
     sub: 'Passport scan accepted',
     time: '2m ago',
     positive: true,
   },
   {
-    icon: '📋',
+    iconType: 'document' as const,
     title: 'Form 11A submitted',
     sub: 'UAE Tourist Visa',
     time: '1h ago',
     positive: true,
   },
   {
-    icon: '⚠️',
+    iconType: 'warning' as const,
     title: 'Action required',
     sub: 'Upload bank statement',
     time: '3h ago',
@@ -71,7 +102,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
             <Text style={styles.userName}>Priya Sharma</Text>
           </View>
           <TouchableOpacity style={styles.notifBtn} activeOpacity={0.8}>
-            <Text style={styles.notifIcon}>🔔</Text>
+            <BellIcon size={20} color={Colors.ink} />
             <View style={styles.notifBadge} />
           </TouchableOpacity>
         </View>
@@ -126,7 +157,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
           {/* Specialist row */}
           <View style={styles.specialistRow}>
             <View style={styles.specialistAvatar}>
-              <Text style={{ fontSize: 18 }}>👩</Text>
+              <Text style={styles.specialistAvatarText}>A</Text>
             </View>
             <View style={styles.specialistInfo}>
               <Text style={styles.specialistName}>Ananya — your specialist</Text>
@@ -180,7 +211,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
                   { backgroundColor: action.color + '18' },
                 ]}
               >
-                <Text style={styles.quickIcon}>{action.icon}</Text>
+                <QuickActionIcon iconKey={action.iconKey} color={action.color} />
               </View>
               <Text style={styles.quickLabel}>{action.label}</Text>
             </TouchableOpacity>
@@ -231,7 +262,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
                   },
                 ]}
               >
-                <Text style={styles.activityIcon}>{item.icon}</Text>
+                <ActivityIcon iconType={item.iconType} positive={item.positive} />
               </View>
               <View style={styles.activityContent}>
                 <Text style={styles.activityTitle}>{item.title}</Text>
@@ -283,9 +314,6 @@ const styles = StyleSheet.create({
     borderColor: Colors.border,
     position: 'relative',
   },
-  notifIcon: {
-    fontSize: 20,
-  },
   notifBadge: {
     position: 'absolute',
     top: 8,
@@ -319,10 +347,9 @@ const styles = StyleSheet.create({
   },
   heroSub: {
     fontSize: FontSizes.xs,
-    fontFamily: 'Inter_400Regular',
+    fontFamily: 'JetBrainsMono_400Regular',
     color: 'rgba(255,255,255,0.65)',
     marginTop: 2,
-    fontFamily: 'JetBrainsMono_400Regular',
   },
   stepRow: {
     flexDirection: 'row',
@@ -370,6 +397,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.2)',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  specialistAvatarText: {
+    fontSize: 16,
+    fontFamily: 'SpaceGrotesk_700Bold',
+    color: Colors.white,
   },
   specialistInfo: {
     flex: 1,
@@ -475,9 +507,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  quickIcon: {
-    fontSize: 20,
-  },
   quickLabel: {
     fontSize: FontSizes.sm,
     fontFamily: 'Inter_600SemiBold',
@@ -531,9 +560,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  activityIcon: {
-    fontSize: 18,
   },
   activityContent: {
     flex: 1,

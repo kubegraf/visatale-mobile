@@ -12,6 +12,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
+import { ChevronLeft, PhoneIcon, PaperclipIcon } from '../../components/ui/Icons';
 
 interface Message {
   id: string;
@@ -98,10 +99,12 @@ export const ConversationScreen: React.FC = () => {
       {/* Chat header */}
       <View style={styles.chatHeader}>
         <TouchableOpacity style={styles.backBtn} activeOpacity={0.7}>
-          <Text style={styles.backText}>←</Text>
+          <ChevronLeft size={24} color={Colors.teal} />
         </TouchableOpacity>
         <View style={styles.headerAvatar}>
-          <Text style={styles.headerAvatarEmoji}>👩</Text>
+          <View style={styles.headerAvatarCircle}>
+            <Text style={styles.headerAvatarText}>AP</Text>
+          </View>
           <View style={styles.onlineDot} />
         </View>
         <View style={styles.headerInfo}>
@@ -109,7 +112,7 @@ export const ConversationScreen: React.FC = () => {
           <Text style={styles.headerStatus}>Online · UAE Specialist</Text>
         </View>
         <TouchableOpacity style={styles.callBtn} activeOpacity={0.8}>
-          <Text style={styles.callBtnText}>📞</Text>
+          <PhoneIcon size={18} color={Colors.slate} />
         </TouchableOpacity>
       </View>
 
@@ -145,7 +148,7 @@ export const ConversationScreen: React.FC = () => {
               >
                 {!isOut && (
                   <View style={styles.bubbleAvatar}>
-                    <Text style={{ fontSize: 14 }}>👩</Text>
+                    <Text style={styles.bubbleAvatarText}>A</Text>
                   </View>
                 )}
                 <View style={styles.bubbleWrap}>
@@ -156,7 +159,7 @@ export const ConversationScreen: React.FC = () => {
                         isOut ? styles.attachmentChipOut : styles.attachmentChipIn,
                       ]}
                     >
-                      <Text style={styles.attachmentIcon}>📎</Text>
+                      <PaperclipIcon size={16} color={Colors.slate} />
                       <Text style={styles.attachmentName}>{item.attachment.name}</Text>
                       <View style={styles.attachmentTypeBadge}>
                         <Text style={styles.attachmentType}>{item.attachment.type}</Text>
@@ -189,7 +192,7 @@ export const ConversationScreen: React.FC = () => {
         {/* Input bar */}
         <View style={styles.inputBar}>
           <TouchableOpacity style={styles.attachBtn} activeOpacity={0.8}>
-            <Text style={styles.attachBtnIcon}>📎</Text>
+            <PaperclipIcon size={18} color={Colors.slate} />
           </TouchableOpacity>
           <TextInput
             style={styles.inputField}
@@ -235,27 +238,23 @@ const styles = StyleSheet.create({
   backBtn: {
     padding: 4,
   },
-  backText: {
-    fontSize: 22,
-    color: Colors.teal,
-    fontFamily: 'Inter_600SemiBold',
-  },
   headerAvatar: {
     position: 'relative',
     width: 42,
     height: 42,
   },
-  headerAvatarEmoji: {
-    fontSize: 28,
+  headerAvatarCircle: {
     width: 42,
     height: 42,
-    lineHeight: 42,
-    textAlign: 'center',
-    backgroundColor: Colors.surface,
     borderRadius: 21,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    overflow: 'hidden',
+    backgroundColor: Colors.teal,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerAvatarText: {
+    fontSize: FontSizes.sm,
+    fontFamily: 'SpaceGrotesk_700Bold',
+    color: Colors.white,
   },
   onlineDot: {
     position: 'absolute',
@@ -290,9 +289,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: Colors.border,
-  },
-  callBtnText: {
-    fontSize: 18,
   },
   messageList: {
     paddingHorizontal: 16,
@@ -331,11 +327,14 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 14,
-    backgroundColor: Colors.surface,
+    backgroundColor: Colors.teal,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: Colors.border,
+  },
+  bubbleAvatarText: {
+    fontSize: 11,
+    fontFamily: 'SpaceGrotesk_700Bold',
+    color: Colors.white,
   },
   bubbleWrap: {
     flex: 1,
@@ -357,9 +356,6 @@ const styles = StyleSheet.create({
   attachmentChipOut: {
     backgroundColor: Colors.teal,
     borderColor: Colors.tealDark,
-  },
-  attachmentIcon: {
-    fontSize: 16,
   },
   attachmentName: {
     flex: 1,
@@ -432,9 +428,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: Colors.border,
-  },
-  attachBtnIcon: {
-    fontSize: 18,
   },
   inputField: {
     flex: 1,

@@ -8,41 +8,55 @@ import {
   Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Svg, { Path, Circle, Text as SvgText, Line } from 'react-native-svg';
+import Svg, { Path, Circle, Text as SvgText, Line, G } from 'react-native-svg';
 import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
 import { Pill } from '../../components/ui/Pill';
+import { BankIcon, SearchIcon, CheckIcon, DocumentIcon, FlightIcon } from '../../components/ui/Icons';
 
 const { width } = Dimensions.get('window');
 
-const EVENTS = [
+type EventIconKey = 'bank' | 'search' | 'document' | 'check' | 'flight';
+
+function EventIconView({ iconKey, active, done }: { iconKey: EventIconKey; active?: boolean; done: boolean }) {
+  const color = active ? Colors.amber : done ? Colors.emerald : 'rgba(255,255,255,0.4)';
+  switch (iconKey) {
+    case 'bank': return <BankIcon size={16} color={color} />;
+    case 'search': return <SearchIcon size={16} color={color} />;
+    case 'document': return <DocumentIcon size={16} color={color} />;
+    case 'check': return <CheckIcon size={16} color={color} />;
+    case 'flight': return <FlightIcon size={16} color={color} />;
+  }
+}
+
+const EVENTS: { iconKey: EventIconKey; title: string; time: string; done: boolean; active?: boolean }[] = [
   {
-    icon: '🏛️',
+    iconKey: 'bank',
     title: 'Embassy received application',
     time: 'Jun 4, 10:02 AM',
     done: true,
   },
   {
-    icon: '🔍',
+    iconKey: 'search',
     title: 'Document verification started',
     time: 'Jun 4, 11:45 AM',
     done: true,
   },
   {
-    icon: '📋',
+    iconKey: 'document',
     title: 'Background check in progress',
     time: 'Jun 5, 09:00 AM',
     done: true,
     active: true,
   },
   {
-    icon: '✅',
+    iconKey: 'check',
     title: 'Visa officer review',
     time: 'Expected Jun 6–7',
     done: false,
   },
   {
-    icon: '📩',
+    iconKey: 'flight',
     title: 'Visa decision issued',
     time: 'Expected Jun 8–10',
     done: false,
@@ -168,14 +182,17 @@ export const LiveStatusScreen: React.FC = () => {
               </SvgText>
 
               {/* Midpoint plane */}
-              <SvgText
-                x={(mum.x + par.x) / 2 + 4}
-                y={cp.y + 20}
-                fontSize={18}
-                textAnchor="middle"
-              >
-                ✈️
-              </SvgText>
+              <G transform={`translate(${(mum.x + par.x) / 2 - 8}, ${cp.y + 8})`}>
+                <Path
+                  d="M17.8 19.2L16 11l3.5-3.5C21 6 21 4 19 4s-2 0-3.5 1.5L11 9 2.8 7.2c-.3-.1-.6 0-.8.3L1.6 8c-.2.4-.1.8.2 1l4.8 3L5 14l-1 1 2 1 1 2 1-1 1.5-1.5 3 4.8c.2.3.7.4 1 .2l.5-.4c.3-.2.4-.6.3-.9z"
+                  stroke={Colors.white}
+                  strokeWidth={1.5}
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  transform="scale(0.9)"
+                />
+              </G>
             </Svg>
           </View>
 
@@ -269,7 +286,7 @@ export const LiveStatusScreen: React.FC = () => {
               </View>
               <View style={styles.eventContent}>
                 <View style={styles.eventTitleRow}>
-                  <Text style={styles.eventIcon}>{ev.icon}</Text>
+                  <EventIconView iconKey={ev.iconKey} active={ev.active} done={ev.done} />
                   <Text
                     style={[
                       styles.eventTitle,
@@ -462,9 +479,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-  },
-  eventIcon: {
-    fontSize: 16,
   },
   eventTitle: {
     fontSize: FontSizes.sm,

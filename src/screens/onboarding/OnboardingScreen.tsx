@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
+import Svg, { Circle } from 'react-native-svg';
 import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
 import { Btn } from '../../components/ui/Btn';
@@ -17,35 +18,57 @@ import { Pill } from '../../components/ui/Pill';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { OnboardingStackParams } from '../../navigation/OnboardingStack';
 
+function TargetArt({ size = 88 }: { size?: number }) {
+  const r = size / 2;
+  return (
+    <Svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      <Circle cx={r} cy={r} r={r * 0.95} fill="rgba(255,255,255,0.1)" />
+      <Circle cx={r} cy={r} r={r * 0.72} fill="rgba(255,255,255,0.14)" />
+      <Circle cx={r} cy={r} r={r * 0.48} fill="rgba(255,255,255,0.2)" />
+      <Circle cx={r} cy={r} r={r * 0.24} fill="rgba(255,255,255,0.9)" />
+    </Svg>
+  );
+}
+
 const { width, height } = Dimensions.get('window');
 
-const SLIDES = [
+type SlideArtType = 'globe' | 'specialist' | 'target';
+
+const SLIDES: {
+  id: string;
+  tag: string;
+  tagTone: 'teal' | 'emerald' | 'amber';
+  heading: string;
+  body: string;
+  artType: SlideArtType;
+  artBg: [string, string];
+}[] = [
   {
     id: '1',
     tag: 'Fast Processing',
-    tagTone: 'teal' as const,
+    tagTone: 'teal',
     heading: 'Visa in days,\nnot weeks',
     body: 'AI-powered applications with real-time tracking for 150+ countries. Skip the embassy queues.',
-    art: '🌏',
-    artBg: ['#0D9488', '#059669'] as [string, string],
+    artType: 'globe',
+    artBg: ['#0D9488', '#059669'],
   },
   {
     id: '2',
     tag: 'Expert Guidance',
-    tagTone: 'emerald' as const,
+    tagTone: 'emerald',
     heading: 'A specialist\nin your pocket',
     body: 'Dedicated visa experts for UAE, Schengen, US and more. Chat anytime, get answers fast.',
-    art: '👨‍💼',
-    artBg: ['#0A1628', '#0D9488'] as [string, string],
+    artType: 'specialist',
+    artBg: ['#0A1628', '#0D9488'],
   },
   {
     id: '3',
     tag: '98% Success Rate',
-    tagTone: 'amber' as const,
+    tagTone: 'amber',
     heading: 'More approvals,\nless stress',
     body: 'Smart document checklist + AI error detection = fewer rejections. Trusted by 2M+ travellers.',
-    art: '🎯',
-    artBg: ['#F59E0B', '#D97706'] as [string, string],
+    artType: 'target',
+    artBg: ['#F59E0B', '#D97706'],
   },
 ];
 
@@ -104,7 +127,9 @@ export const OnboardingScreen: React.FC<Props> = ({ navigation }) => {
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 1 }}
             >
-              <Text style={styles.artEmoji}>{item.art}</Text>
+              {item.artType === 'globe' && <Text style={styles.artEmoji}>🌏</Text>}
+              {item.artType === 'specialist' && <Text style={styles.artEmoji}>👨‍💼</Text>}
+              {item.artType === 'target' && <TargetArt size={88} />}
               {/* Decorative circles */}
               <View style={styles.decorCircle1} />
               <View style={styles.decorCircle2} />

@@ -12,46 +12,93 @@ import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { MainTabsParams } from '../../navigation/MainTabs';
+import {
+  DocumentIcon,
+  PassportIcon,
+  BankIcon,
+  GlobeIcon,
+  CurrencyRupeeIcon,
+  BellIcon,
+  SettingsIcon,
+  EmailIcon,
+  PhoneIcon,
+  LockIcon,
+  FaceIdIcon,
+  StarIcon,
+  ShieldIcon,
+  ChecklistIcon,
+  ChevronRight,
+} from '../../components/ui/Icons';
 
 type Props = BottomTabScreenProps<MainTabsParams, 'Profile'>;
 
-const SETTINGS_GROUPS = [
+type SettingsIconKey =
+  | 'document' | 'passport' | 'bank' | 'globe' | 'currency' | 'bell'
+  | 'settings' | 'email' | 'phone' | 'lock' | 'faceid' | 'shield'
+  | 'checklist' | 'star';
+
+function SettingsItemIcon({ iconKey }: { iconKey: SettingsIconKey }) {
+  const color = Colors.slate;
+  const size = 18;
+  switch (iconKey) {
+    case 'document': return <DocumentIcon size={size} color={color} />;
+    case 'passport': return <PassportIcon size={size} color={color} />;
+    case 'bank': return <BankIcon size={size} color={color} />;
+    case 'globe': return <GlobeIcon size={size} color={color} />;
+    case 'currency': return <CurrencyRupeeIcon size={size} color={color} />;
+    case 'bell': return <BellIcon size={size} color={color} />;
+    case 'settings': return <SettingsIcon size={size} color={color} />;
+    case 'email': return <EmailIcon size={size} color={color} />;
+    case 'phone': return <PhoneIcon size={size} color={color} />;
+    case 'lock': return <LockIcon size={size} color={color} />;
+    case 'faceid': return <FaceIdIcon size={size} color={color} />;
+    case 'shield': return <ShieldIcon size={size} color={color} />;
+    case 'checklist': return <ChecklistIcon size={size} color={color} />;
+    case 'star': return <StarIcon size={size} color={color} />;
+  }
+}
+
+const SETTINGS_GROUPS: {
+  title: string;
+  iconKey: SettingsIconKey;
+  items: { iconKey: SettingsIconKey; label: string; value: string }[];
+}[] = [
   {
     title: 'Documents',
-    icon: '📄',
+    iconKey: 'document',
     items: [
-      { icon: '🛂', label: 'Passports', value: '2 saved' },
-      { icon: '📋', label: 'Travel Documents', value: '5 files' },
-      { icon: '🏦', label: 'Financial Documents', value: '3 files' },
+      { iconKey: 'passport', label: 'Passports', value: '2 saved' },
+      { iconKey: 'checklist', label: 'Travel Documents', value: '5 files' },
+      { iconKey: 'bank', label: 'Financial Documents', value: '3 files' },
     ],
   },
   {
     title: 'Preferences',
-    icon: '⚙️',
+    iconKey: 'settings',
     items: [
-      { icon: '🌍', label: 'Home Country', value: 'India 🇮🇳' },
-      { icon: '💰', label: 'Currency', value: 'INR' },
-      { icon: '🔔', label: 'Notifications', value: 'All on' },
-      { icon: '🌐', label: 'Language', value: 'English' },
+      { iconKey: 'globe', label: 'Home Country', value: 'India 🇮🇳' },
+      { iconKey: 'currency', label: 'Currency', value: 'INR' },
+      { iconKey: 'bell', label: 'Notifications', value: 'All on' },
+      { iconKey: 'globe', label: 'Language', value: 'English' },
     ],
   },
   {
     title: 'Account',
-    icon: '👤',
+    iconKey: 'star',
     items: [
-      { icon: '✉️', label: 'Email', value: 'priya@example.com' },
-      { icon: '📱', label: 'Phone', value: '+91 98765 43210' },
-      { icon: '🔒', label: 'Password', value: 'Change' },
-      { icon: '🔐', label: 'Face ID', value: 'Enabled' },
+      { iconKey: 'email', label: 'Email', value: 'priya@example.com' },
+      { iconKey: 'phone', label: 'Phone', value: '+91 98765 43210' },
+      { iconKey: 'lock', label: 'Password', value: 'Change' },
+      { iconKey: 'faceid', label: 'Face ID', value: 'Enabled' },
     ],
   },
   {
     title: 'Legal',
-    icon: '⚖️',
+    iconKey: 'shield',
     items: [
-      { icon: '📜', label: 'Terms of Service', value: '' },
-      { icon: '🛡️', label: 'Privacy Policy', value: '' },
-      { icon: '🍪', label: 'Cookie Settings', value: '' },
+      { iconKey: 'document', label: 'Terms of Service', value: '' },
+      { iconKey: 'shield', label: 'Privacy Policy', value: '' },
+      { iconKey: 'settings', label: 'Cookie Settings', value: '' },
     ],
   },
 ];
@@ -72,7 +119,7 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
         >
           {/* Settings button */}
           <TouchableOpacity style={styles.settingsBtn} activeOpacity={0.8}>
-            <Text style={styles.settingsIcon}>⚙️</Text>
+            <SettingsIcon size={18} color={Colors.white} />
           </TouchableOpacity>
 
           {/* Avatar */}
@@ -87,7 +134,7 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
 
           {/* Membership */}
           <View style={styles.membershipBadge}>
-            <Text style={styles.membershipIcon}>⭐</Text>
+            <StarIcon size={14} color={Colors.amberLight} />
             <Text style={styles.membershipText}>Pro Member · Joined Jan 2024</Text>
           </View>
 
@@ -116,12 +163,12 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
         {/* Verification strip */}
         <View style={styles.verifyStrip}>
           {[
-            { icon: '✅', label: 'Email verified' },
-            { icon: '✅', label: 'Phone verified' },
-            { icon: '⏳', label: 'KYC pending' },
+            { met: true, label: 'Email verified' },
+            { met: true, label: 'Phone verified' },
+            { met: false, label: 'KYC pending' },
           ].map((v, i) => (
             <View key={i} style={styles.verifyItem}>
-              <Text style={styles.verifyIcon}>{v.icon}</Text>
+              <View style={[styles.verifyDot, { backgroundColor: v.met ? Colors.emerald : Colors.amber }]} />
               <Text style={styles.verifyLabel}>{v.label}</Text>
             </View>
           ))}
@@ -130,7 +177,10 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
         {/* Settings groups */}
         {SETTINGS_GROUPS.map((group, gi) => (
           <View key={gi} style={styles.settingsGroup}>
-            <Text style={styles.groupTitle}>{group.icon}  {group.title}</Text>
+            <View style={styles.groupTitleRow}>
+              <SettingsItemIcon iconKey={group.iconKey} />
+              <Text style={styles.groupTitle}>{group.title}</Text>
+            </View>
             <View style={styles.groupCard}>
               {group.items.map((item, ii) => (
                 <TouchableOpacity
@@ -141,13 +191,15 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
                   ]}
                   activeOpacity={0.7}
                 >
-                  <Text style={styles.settingsRowIcon}>{item.icon}</Text>
+                  <View style={styles.settingsRowIconWrap}>
+                    <SettingsItemIcon iconKey={item.iconKey} />
+                  </View>
                   <Text style={styles.settingsLabel}>{item.label}</Text>
                   <View style={styles.settingsRight}>
                     {item.value ? (
                       <Text style={styles.settingsValue}>{item.value}</Text>
                     ) : null}
-                    <Text style={styles.settingsChevron}>›</Text>
+                    <ChevronRight size={16} color={Colors.muted} />
                   </View>
                 </TouchableOpacity>
               ))}
@@ -193,9 +245,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 2,
-  },
-  settingsIcon: {
-    fontSize: 18,
   },
   avatarOuter: {
     position: 'relative',
@@ -251,9 +300,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.25)',
-  },
-  membershipIcon: {
-    fontSize: 14,
   },
   membershipText: {
     fontSize: FontSizes.xs,
@@ -322,8 +368,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 4,
   },
-  verifyIcon: {
-    fontSize: 12,
+  verifyDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
   },
   verifyLabel: {
     fontSize: FontSizes.xs,
@@ -334,6 +382,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginTop: 20,
     gap: 8,
+  },
+  groupTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
   },
   groupTitle: {
     fontSize: FontSizes.xs,
@@ -360,10 +413,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
   },
-  settingsRowIcon: {
-    fontSize: 18,
-    width: 28,
-    textAlign: 'center',
+  settingsRowIconWrap: {
+    width: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   settingsLabel: {
     flex: 1,
@@ -380,11 +433,6 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.xs,
     fontFamily: 'Inter_400Regular',
     color: Colors.muted,
-  },
-  settingsChevron: {
-    fontSize: FontSizes.xl,
-    color: Colors.muted,
-    lineHeight: 22,
   },
   signOutBtn: {
     marginHorizontal: 20,

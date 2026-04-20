@@ -12,6 +12,7 @@ import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
 import { Btn } from '../../components/ui/Btn';
 import { Pill } from '../../components/ui/Pill';
+import { BankIcon } from '../../components/ui/Icons';
 
 const STEPS = ['Route', 'Profile', 'Plan'];
 
@@ -170,7 +171,7 @@ export const ApplyStep3Screen: React.FC = () => {
 
         {/* Government fee note */}
         <View style={styles.govNote}>
-          <Text style={styles.govNoteIcon}>🏛️</Text>
+          <BankIcon size={16} color={Colors.slate} />
           <Text style={styles.govNoteText}>
             Government visa fee (AED 300 ≈ ₹6,700) is charged separately and paid directly to the UAE embassy.
           </Text>
@@ -351,9 +352,6 @@ const styles = StyleSheet.create({
     padding: 12,
     borderWidth: 1,
     borderColor: Colors.border,
-  },
-  govNoteIcon: {
-    fontSize: 16,
   },
   govNoteText: {
     flex: 1,

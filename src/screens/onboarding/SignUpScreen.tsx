@@ -183,11 +183,10 @@ export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
               onChangeText={(t) => setForm({ ...form, password: t })}
               secureTextEntry={!showPassword}
               returnKeyType="done"
-              rightElement={
-                <TouchableOpacity onPress={() => setShowPassword(!showPassword)} activeOpacity={0.7} style={styles.eyeBtn}>
-                  <EyeIcon size={20} color={Colors.muted} off={showPassword} />
-                </TouchableOpacity>
+              iconRight={
+                <EyeIcon size={20} color={Colors.muted} off={showPassword} />
               }
+              onIconRightPress={() => setShowPassword(!showPassword)}
             />
             {pwTooShort && (
               <Text style={styles.pwHint}>Min 8 characters</Text>

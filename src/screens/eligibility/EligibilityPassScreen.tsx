@@ -96,11 +96,11 @@ export const EligibilityPassScreen: React.FC = () => {
         <View style={styles.pricingCard}>
           <Text style={styles.pricingTitle}>Pricing Overview</Text>
           <View style={styles.pricingRow}>
-            <Text style={styles.pricingLabel}>🏛️ Government visa fee</Text>
+            <Text style={styles.pricingLabel}>Government visa fee</Text>
             <Text style={styles.pricingValue}>AED 300 (~₹6,700)</Text>
           </View>
           <View style={styles.pricingRow}>
-            <Text style={styles.pricingLabel}>✈️ Service fee (Pro)</Text>
+            <Text style={styles.pricingLabel}>Service fee (Pro)</Text>
             <Text style={styles.pricingValue}>₹2,499</Text>
           </View>
           <View style={styles.pricingDivider} />

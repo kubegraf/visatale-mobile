@@ -11,6 +11,9 @@ import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
 import { Btn } from '../../components/ui/Btn';
 import { Pill } from '../../components/ui/Pill';
+import { ChatBubbleIcon, GlobeIcon, WarningIcon, PassportIcon } from '../../components/ui/Icons';
+
+type NextStepIconKey = 'chat' | 'passport' | 'globe';
 
 const REASONS = [
   {
@@ -23,26 +26,34 @@ const REASONS = [
   },
 ];
 
-const NEXT_STEPS = [
+const NEXT_STEPS: { iconKey: NextStepIconKey; label: string; sub: string; cta: string }[] = [
   {
-    icon: '💬',
+    iconKey: 'chat',
     label: 'Speak to a specialist',
     sub: 'Get expert advice on improving your profile',
     cta: 'Chat Now',
   },
   {
-    icon: '🛂',
+    iconKey: 'passport',
     label: 'Renew your passport',
     sub: 'Apply for a passport renewal before your next trip',
     cta: 'Learn how',
   },
   {
-    icon: '🌍',
+    iconKey: 'globe',
     label: 'Try a different destination',
     sub: 'Check eligibility for 150+ countries',
     cta: 'Explore',
   },
 ];
+
+function NextStepIcon({ iconKey }: { iconKey: NextStepIconKey }) {
+  switch (iconKey) {
+    case 'chat': return <ChatBubbleIcon size={22} color={Colors.teal} />;
+    case 'passport': return <PassportIcon size={22} color={Colors.teal} />;
+    case 'globe': return <GlobeIcon size={22} color={Colors.teal} />;
+  }
+}
 
 export const EligibilityFailScreen: React.FC = () => {
   return (
@@ -57,7 +68,7 @@ export const EligibilityFailScreen: React.FC = () => {
         <View style={styles.artSection}>
           <View style={styles.warningOuter}>
             <View style={styles.warningInner}>
-              <Text style={styles.warningEmoji}>⚠️</Text>
+              <WarningIcon size={30} color={Colors.white} />
             </View>
           </View>
           <Pill label="Not Eligible Yet" tone="amber" dot />
@@ -91,7 +102,7 @@ export const EligibilityFailScreen: React.FC = () => {
           {NEXT_STEPS.map((step, i) => (
             <View key={i} style={styles.stepCard}>
               <View style={styles.stepIconWrap}>
-                <Text style={styles.stepIcon}>{step.icon}</Text>
+                <NextStepIcon iconKey={step.iconKey} />
               </View>
               <View style={styles.stepInfo}>
                 <Text style={styles.stepLabel}>{step.label}</Text>
@@ -107,7 +118,7 @@ export const EligibilityFailScreen: React.FC = () => {
         {/* Specialist card */}
         <View style={styles.specCard}>
           <View style={styles.specAvatar}>
-            <Text style={{ fontSize: 26 }}>👩</Text>
+            <Text style={styles.specAvatarText}>A</Text>
           </View>
           <View style={styles.specInfo}>
             <Text style={styles.specName}>Talk to Ananya</Text>
@@ -121,7 +132,7 @@ export const EligibilityFailScreen: React.FC = () => {
 
         {/* CTAs */}
         <View style={styles.ctaSection}>
-          <Btn label="💬 Chat with Specialist" onPress={() => {}} />
+          <Btn label="Chat with Specialist" onPress={() => {}} />
           <Btn label="Try Another Country" kind="outline" onPress={() => {}} />
         </View>
       </ScrollView>
@@ -167,9 +178,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.amber,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  warningEmoji: {
-    fontSize: 30,
   },
   textSection: {
     alignItems: 'center',
@@ -259,9 +267,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.border,
   },
-  stepIcon: {
-    fontSize: 22,
-  },
   stepInfo: {
     flex: 1,
   },
@@ -304,11 +309,14 @@ const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 26,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.teal,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: Colors.border,
+  },
+  specAvatarText: {
+    fontSize: FontSizes.xl,
+    fontFamily: 'SpaceGrotesk_700Bold',
+    color: Colors.white,
   },
   specInfo: {
     flex: 1,

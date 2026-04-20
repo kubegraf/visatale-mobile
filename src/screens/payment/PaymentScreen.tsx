@@ -11,12 +11,33 @@ import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
 import { Btn } from '../../components/ui/Btn';
 import { Field } from '../../components/ui/Field';
+import {
+  CreditCardIcon,
+  BankIcon,
+  ChevronLeft,
+  ShieldIcon,
+  LockIcon,
+} from '../../components/ui/Icons';
 
 const PAYMENT_METHODS = [
-  { id: 'card', label: 'Credit / Debit Card', icon: '💳' },
-  { id: 'upi', label: 'UPI', icon: '📱' },
-  { id: 'netbanking', label: 'Net Banking', icon: '🏦' },
+  { id: 'card', label: 'Credit / Debit Card' },
+  { id: 'upi', label: 'UPI' },
+  { id: 'netbanking', label: 'Net Banking' },
 ];
+
+function PaymentMethodIcon({ id, color }: { id: string; color: string }) {
+  switch (id) {
+    case 'card': return <CreditCardIcon size={22} color={color} />;
+    case 'upi':
+      return (
+        <Text style={{ fontSize: 13, fontFamily: 'Inter_700Bold', color, width: 22, textAlign: 'center' }}>
+          UPI
+        </Text>
+      );
+    case 'netbanking': return <BankIcon size={22} color={color} />;
+    default: return null;
+  }
+}
 
 export const PaymentScreen: React.FC = () => {
   const [method, setMethod] = useState('card');
@@ -43,7 +64,7 @@ export const PaymentScreen: React.FC = () => {
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
       <View style={styles.header}>
         <TouchableOpacity activeOpacity={0.7}>
-          <Text style={styles.back}>←</Text>
+          <ChevronLeft size={24} color={Colors.teal} />
         </TouchableOpacity>
         <Text style={styles.heading}>Checkout</Text>
         <View style={{ width: 32 }} />
@@ -75,7 +96,7 @@ export const PaymentScreen: React.FC = () => {
             </View>
 
             <View style={styles.transparencyRow}>
-              <Text style={styles.transparencyIcon}>🏛️</Text>
+              <BankIcon size={18} color={Colors.muted} />
               <View style={styles.transparencyContent}>
                 <Text style={styles.transparencyTitle}>Government Visa Fee</Text>
                 <Text style={styles.transparencyNote}>
@@ -102,7 +123,7 @@ export const PaymentScreen: React.FC = () => {
 
           {/* Money back banner */}
           <View style={styles.moneyBackBanner}>
-            <Text style={styles.moneyBackIcon}>🛡️</Text>
+            <ShieldIcon size={22} color={Colors.emerald} />
             <View style={styles.moneyBackContent}>
               <Text style={styles.moneyBackTitle}>100% Money-Back Guarantee</Text>
               <Text style={styles.moneyBackSub}>
@@ -126,7 +147,12 @@ export const PaymentScreen: React.FC = () => {
                 onPress={() => setMethod(m.id)}
                 activeOpacity={0.8}
               >
-                <Text style={styles.methodIcon}>{m.icon}</Text>
+                <View style={styles.methodIconWrap}>
+                  <PaymentMethodIcon
+                    id={m.id}
+                    color={method === m.id ? Colors.teal : Colors.slate}
+                  />
+                </View>
                 <Text
                   style={[
                     styles.methodLabel,
@@ -216,7 +242,10 @@ export const PaymentScreen: React.FC = () => {
 
         {/* Security badge */}
         <View style={styles.securityRow}>
-          <Text style={styles.securityText}>🔒 Secured by Razorpay · PCI DSS compliant</Text>
+          <View style={styles.securityInner}>
+            <LockIcon size={12} color={Colors.muted} />
+            <Text style={styles.securityText}>Secured by Razorpay · PCI DSS compliant</Text>
+          </View>
         </View>
       </ScrollView>
 
@@ -245,11 +274,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
     backgroundColor: Colors.white,
-  },
-  back: {
-    fontSize: 22,
-    color: Colors.teal,
-    fontFamily: 'Inter_600SemiBold',
   },
   heading: {
     fontSize: FontSizes.md,
@@ -438,8 +462,10 @@ const styles = StyleSheet.create({
   methodRowActive: {
     backgroundColor: Colors.surface,
   },
-  methodIcon: {
-    fontSize: 22,
+  methodIconWrap: {
+    width: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   methodLabel: {
     flex: 1,
@@ -497,6 +523,11 @@ const styles = StyleSheet.create({
   securityRow: {
     alignItems: 'center',
     paddingVertical: 4,
+  },
+  securityInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
   },
   securityText: {
     fontSize: FontSizes.xs,

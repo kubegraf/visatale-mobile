@@ -12,6 +12,7 @@ import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { MainTabsParams } from '../../navigation/MainTabs';
+import { SearchIcon } from '../../components/ui/Icons';
 
 type Props = BottomTabScreenProps<MainTabsParams, 'Messages'>;
 
@@ -20,7 +21,8 @@ const CONVERSATIONS = [
     id: '1',
     name: 'Ananya Patel',
     role: 'UAE Specialist',
-    avatar: '👩',
+    initials: 'AP',
+    avatarColor: '#0D9488',
     lastMsg: 'Your documents look great! Just need the bank statement re-uploaded.',
     time: '2m ago',
     unread: 2,
@@ -30,7 +32,8 @@ const CONVERSATIONS = [
     id: '2',
     name: 'Rajesh Kumar',
     role: 'Schengen Specialist',
-    avatar: '👨',
+    initials: 'RK',
+    avatarColor: '#6366F1',
     lastMsg: 'The consulate confirmed receipt of your application.',
     time: '1h ago',
     unread: 0,
@@ -40,7 +43,8 @@ const CONVERSATIONS = [
     id: '3',
     name: 'Sarah Chen',
     role: 'UK Visa Expert',
-    avatar: '👩',
+    initials: 'SC',
+    avatarColor: '#EC4899',
     lastMsg: "I'll follow up with the VFS center tomorrow morning.",
     time: '3h ago',
     unread: 1,
@@ -50,7 +54,8 @@ const CONVERSATIONS = [
     id: '4',
     name: 'Visatale Support',
     role: 'General Support',
-    avatar: '🤖',
+    initials: 'VS',
+    avatarColor: '#F59E0B',
     lastMsg: 'Your payment has been confirmed. Reference: PAY-884321',
     time: 'Yesterday',
     unread: 0,
@@ -60,7 +65,8 @@ const CONVERSATIONS = [
     id: '5',
     name: 'Mohammed Al Rashid',
     role: 'UAE/GCC Specialist',
-    avatar: '👨',
+    initials: 'MA',
+    avatarColor: '#059669',
     lastMsg: 'Visa approved! Sending to your email now.',
     time: 'May 20',
     unread: 0,
@@ -82,7 +88,7 @@ export const MessagesListScreen: React.FC<Props> = ({ navigation }) => {
       <View style={styles.header}>
         <Text style={styles.heading}>Messages</Text>
         <View style={styles.searchBar}>
-          <Text style={styles.searchIcon}>🔍</Text>
+          <SearchIcon size={16} color={Colors.muted} />
           <TextInput
             style={styles.searchInput}
             placeholder="Search conversations…"
@@ -103,8 +109,8 @@ export const MessagesListScreen: React.FC<Props> = ({ navigation }) => {
           <TouchableOpacity style={styles.row} activeOpacity={0.8}>
             {/* Avatar */}
             <View style={styles.avatarWrap}>
-              <View style={styles.avatar}>
-                <Text style={styles.avatarEmoji}>{item.avatar}</Text>
+              <View style={[styles.avatar, { backgroundColor: item.avatarColor }]}>
+                <Text style={styles.avatarInitials}>{item.initials}</Text>
               </View>
               {item.online && <View style={styles.onlineBadge} />}
             </View>
@@ -168,9 +174,6 @@ const styles = StyleSheet.create({
     height: 44,
     gap: 8,
   },
-  searchIcon: {
-    fontSize: 16,
-  },
   searchInput: {
     flex: 1,
     fontSize: FontSizes.sm,
@@ -200,14 +203,13 @@ const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 26,
-    backgroundColor: Colors.surface,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: Colors.border,
   },
-  avatarEmoji: {
-    fontSize: 26,
+  avatarInitials: {
+    fontSize: FontSizes.base,
+    fontFamily: 'SpaceGrotesk_700Bold',
+    color: Colors.white,
   },
   onlineBadge: {
     position: 'absolute',

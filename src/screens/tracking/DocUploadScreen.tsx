@@ -12,6 +12,13 @@ import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
 import { Pill } from '../../components/ui/Pill';
 import { Btn } from '../../components/ui/Btn';
+import {
+  UploadIcon,
+  CheckIcon,
+  WarningIcon,
+  ClockIcon,
+  InfoIcon,
+} from '../../components/ui/Icons';
 
 const DOC_TYPES = [
   { id: 'passport', name: 'Passport (bio page)', required: true, hint: 'Clear scan, all 4 corners visible' },
@@ -84,20 +91,20 @@ export const DocUploadScreen: React.FC = () => {
           onPress={() => {}}
         >
           <View style={styles.uploadIconWrap}>
-            <Text style={styles.uploadIcon}>📁</Text>
+            <UploadIcon size={32} color={Colors.teal} />
           </View>
           <Text style={styles.uploadTitle}>Tap to upload or take photo</Text>
           <Text style={styles.uploadSub}>PDF, JPG, PNG · Max 10 MB per file</Text>
           <View style={styles.uploadBadges}>
-            <Text style={styles.uploadBadge}>📄 PDF</Text>
-            <Text style={styles.uploadBadge}>🖼️ JPG</Text>
-            <Text style={styles.uploadBadge}>🖼️ PNG</Text>
+            <Text style={styles.uploadBadge}>PDF</Text>
+            <Text style={styles.uploadBadge}>JPG</Text>
+            <Text style={styles.uploadBadge}>PNG</Text>
           </View>
         </TouchableOpacity>
 
         {/* AI scan note */}
         <View style={styles.aiNote}>
-          <Text style={styles.aiNoteIcon}>🤖</Text>
+          <InfoIcon size={18} color={Colors.teal} />
           <Text style={styles.aiNoteText}>
             Documents are scanned by AI for clarity, validity dates, and completeness.
           </Text>
@@ -123,13 +130,13 @@ export const DocUploadScreen: React.FC = () => {
                       },
                     ]}
                   >
-                    <Text style={styles.fileIcon}>
-                      {file.status === 'passed'
-                        ? '✅'
-                        : file.status === 'failed'
-                        ? '❌'
-                        : '⏳'}
-                    </Text>
+                    {file.status === 'passed' ? (
+                      <CheckIcon size={18} color={Colors.emerald} />
+                    ) : file.status === 'failed' ? (
+                      <WarningIcon size={18} color={Colors.error} />
+                    ) : (
+                      <ClockIcon size={18} color={Colors.amber} />
+                    )}
                   </View>
                   <View style={styles.fileInfo}>
                     <Text style={styles.fileName}>{file.name}</Text>
@@ -175,11 +182,14 @@ export const DocUploadScreen: React.FC = () => {
                 {/* AI scan result */}
                 {file.status === 'passed' && (
                   <View style={styles.scanResult}>
-                    <Text style={styles.scanResultTitle}>✅ AI Scan Passed</Text>
+                    <View style={styles.scanResultTitleRow}>
+                      <CheckIcon size={16} color={Colors.emerald} />
+                      <Text style={styles.scanResultTitle}>AI Scan Passed</Text>
+                    </View>
                     {['Document readable', 'Expiry date valid', 'All data fields detected'].map(
                       (c, i) => (
                         <View key={i} style={styles.scanCheck}>
-                          <Text style={styles.scanCheckIcon}>✓</Text>
+                          <CheckIcon size={14} color={Colors.emerald} />
                           <Text style={styles.scanCheckText}>{c}</Text>
                         </View>
                       )
@@ -190,10 +200,13 @@ export const DocUploadScreen: React.FC = () => {
                 {/* Issues */}
                 {file.status === 'failed' && file.issues && (
                   <View style={styles.scanFailed}>
-                    <Text style={styles.scanFailedTitle}>❌ Issues Found</Text>
+                    <View style={styles.scanResultTitleRow}>
+                      <WarningIcon size={16} color={Colors.error} />
+                      <Text style={styles.scanFailedTitle}>Issues Found</Text>
+                    </View>
                     {file.issues.map((issue, i) => (
                       <View key={i} style={styles.issueRow}>
-                        <Text style={styles.issueIcon}>•</Text>
+                        <View style={styles.issueDot} />
                         <Text style={styles.issueText}>{issue}</Text>
                       </View>
                     ))}
@@ -315,9 +328,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.border,
   },
-  uploadIcon: {
-    fontSize: 26,
-  },
   uploadTitle: {
     fontSize: FontSizes.md,
     fontFamily: 'Inter_600SemiBold',
@@ -356,9 +366,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.border,
   },
-  aiNoteIcon: {
-    fontSize: 16,
-  },
   aiNoteText: {
     flex: 1,
     fontSize: FontSizes.xs,
@@ -391,9 +398,6 @@ const styles = StyleSheet.create({
     borderRadius: 22,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  fileIcon: {
-    fontSize: 20,
   },
   fileInfo: {
     flex: 1,
@@ -438,20 +442,21 @@ const styles = StyleSheet.create({
     padding: 10,
     gap: 5,
   },
+  scanResultTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 3,
+  },
   scanResultTitle: {
     fontSize: FontSizes.sm,
     fontFamily: 'Inter_600SemiBold',
     color: Colors.emerald,
-    marginBottom: 3,
   },
   scanCheck: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-  },
-  scanCheckIcon: {
-    fontSize: 12,
-    color: Colors.emerald,
   },
   scanCheckText: {
     fontSize: FontSizes.xs,
@@ -468,17 +473,19 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.sm,
     fontFamily: 'Inter_600SemiBold',
     color: Colors.error,
-    marginBottom: 4,
   },
   issueRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     gap: 6,
   },
-  issueIcon: {
-    fontSize: 12,
-    color: Colors.error,
-    marginTop: 2,
+  issueDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: Colors.error,
+    marginTop: 4,
+    flexShrink: 0,
   },
   issueText: {
     fontSize: FontSizes.xs,

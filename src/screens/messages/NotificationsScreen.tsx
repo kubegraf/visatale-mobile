@@ -10,10 +10,34 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
 import { Pill } from '../../components/ui/Pill';
+import {
+  CheckIcon,
+  WarningIcon,
+  ChatBubbleIcon,
+  CreditCardIcon,
+  StarIcon,
+  DocumentIcon,
+  BankIcon,
+} from '../../components/ui/Icons';
+
+type NotifIconType = 'check' | 'warning' | 'chat' | 'creditcard' | 'star' | 'document' | 'bank';
+
+function NotifIconView({ iconType, unread }: { iconType: NotifIconType; unread: boolean }) {
+  const color = unread ? Colors.teal : Colors.muted;
+  switch (iconType) {
+    case 'check': return <CheckIcon size={20} color={Colors.emerald} />;
+    case 'warning': return <WarningIcon size={20} color={Colors.amber} />;
+    case 'chat': return <ChatBubbleIcon size={20} color={color} />;
+    case 'creditcard': return <CreditCardIcon size={20} color={color} />;
+    case 'star': return <StarIcon size={20} color={Colors.amber} />;
+    case 'document': return <DocumentIcon size={20} color={color} />;
+    case 'bank': return <BankIcon size={20} color={color} />;
+  }
+}
 
 interface NotifItem {
   id: string;
-  icon: string;
+  iconType: NotifIconType;
   title: string;
   body: string;
   time: string;
@@ -27,7 +51,7 @@ interface NotifItem {
 const TODAY: NotifItem[] = [
   {
     id: '1',
-    icon: '✅',
+    iconType: 'check',
     title: 'Document Verified',
     body: 'Your passport scan for UAE Tourist Visa has been verified successfully.',
     time: '2m ago',
@@ -37,7 +61,7 @@ const TODAY: NotifItem[] = [
   },
   {
     id: '2',
-    icon: '⚠️',
+    iconType: 'warning',
     title: 'Action Required',
     body: 'Re-upload your bank statement with the last 3 months and a bank stamp.',
     time: '1h ago',
@@ -49,7 +73,7 @@ const TODAY: NotifItem[] = [
   },
   {
     id: '3',
-    icon: '💬',
+    iconType: 'chat',
     title: 'New message from Ananya',
     body: 'Your documents look great! Just need the bank statement re-uploaded.',
     time: '2h ago',
@@ -62,7 +86,7 @@ const TODAY: NotifItem[] = [
 const THIS_WEEK: NotifItem[] = [
   {
     id: '4',
-    icon: '🏛️',
+    iconType: 'bank',
     title: 'Application Received by Embassy',
     body: 'UAE Embassy has confirmed receipt of your application #VT-2024-08421.',
     time: 'Yesterday',
@@ -72,7 +96,7 @@ const THIS_WEEK: NotifItem[] = [
   },
   {
     id: '5',
-    icon: '💳',
+    iconType: 'creditcard',
     title: 'Payment Successful',
     body: '₹2,499 charged for Pro Plan — UAE Tourist Visa application.',
     time: '2 days ago',
@@ -80,7 +104,7 @@ const THIS_WEEK: NotifItem[] = [
   },
   {
     id: '6',
-    icon: '🎉',
+    iconType: 'star',
     title: 'France Visa Approved!',
     body: 'Congratulations! Your Schengen visa is approved. Download your visa from the app.',
     time: '3 days ago',
@@ -92,7 +116,7 @@ const THIS_WEEK: NotifItem[] = [
   },
   {
     id: '7',
-    icon: '📋',
+    iconType: 'document',
     title: 'Reminder: Upload Hotel Booking',
     body: 'Your UAE application is missing a hotel booking confirmation.',
     time: '4 days ago',
@@ -147,7 +171,7 @@ export const NotificationsScreen: React.FC = () => {
                   },
                 ]}
               >
-                <Text style={styles.icon}>{item.icon}</Text>
+                <NotifIconView iconType={item.iconType} unread={item.unread} />
               </View>
 
               {/* Content */}
@@ -283,9 +307,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.border,
     flexShrink: 0,
-  },
-  icon: {
-    fontSize: 20,
   },
   content: {
     flex: 1,

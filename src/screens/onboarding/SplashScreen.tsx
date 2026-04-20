@@ -13,6 +13,7 @@ import { Colors } from '../../constants/colors';
 import { FontSizes } from '../../constants/typography';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { OnboardingStackParams } from '../../navigation/OnboardingStack';
+import { FlightIcon } from '../../components/ui/Icons';
 
 const { width } = Dimensions.get('window');
 const LOGO_SIZE = 96;
@@ -139,7 +140,7 @@ export const SplashScreen: React.FC<Props> = ({ navigation }) => {
             ]}
           >
             <View style={styles.logoCircle}>
-              <Text style={styles.logoEmoji}>✈️</Text>
+              <FlightIcon size={40} color={Colors.white} />
             </View>
           </Animated.View>
 
@@ -192,9 +193,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.3)',
-  },
-  logoEmoji: {
-    fontSize: 44,
   },
   logoText: {
     fontSize: FontSizes['4xl'],
