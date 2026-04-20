@@ -16,7 +16,10 @@ import { FontSizes } from '../../constants/typography';
 import { Btn } from '../../components/ui/Btn';
 import { Field } from '../../components/ui/Field';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { OnboardingStackParams } from '../../navigation/OnboardingStack';
+import { RootStackParams } from '../../navigation/AppNavigator';
 
 type Props = NativeStackScreenProps<OnboardingStackParams, 'SignIn'>;
 
@@ -58,13 +61,17 @@ function FaceIdSvg({ size = 52, color = '#fff' }: { size?: number; color?: strin
 }
 
 export const SignInScreen: React.FC<Props> = ({ navigation }) => {
+  const rootNav = useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSignIn = () => {
     setLoading(true);
-    setTimeout(() => setLoading(false), 1200);
+    setTimeout(() => {
+      setLoading(false);
+      rootNav.reset({ index: 0, routes: [{ name: 'Main' }] });
+    }, 800);
   };
 
   return (

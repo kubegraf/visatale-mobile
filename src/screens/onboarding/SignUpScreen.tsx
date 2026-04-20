@@ -16,7 +16,10 @@ import { FontSizes } from '../../constants/typography';
 import { Btn } from '../../components/ui/Btn';
 import { Field } from '../../components/ui/Field';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { OnboardingStackParams } from '../../navigation/OnboardingStack';
+import { RootStackParams } from '../../navigation/AppNavigator';
 
 type Props = NativeStackScreenProps<OnboardingStackParams, 'SignUp'>;
 
@@ -96,6 +99,7 @@ const STRENGTH_LABELS = ['', 'Weak', 'Fair', 'Good', 'Strong'];
 const STRENGTH_COLORS = ['', Colors.error, Colors.amber, Colors.teal, Colors.emerald];
 
 export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
+  const rootNav = useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [form, setForm] = useState({ name: '', email: '', phone: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [biometricEnabled, setBiometricEnabled] = useState(true);
@@ -108,8 +112,8 @@ export const SignUpScreen: React.FC<Props> = ({ navigation }) => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      navigation.navigate('SignIn');
-    }, 1500);
+      rootNav.reset({ index: 0, routes: [{ name: 'Main' }] });
+    }, 1000);
   };
 
   return (
