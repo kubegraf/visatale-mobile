@@ -24,7 +24,7 @@ interface Message {
 const INITIAL_MESSAGES: Message[] = [
   {
     id: '1',
-    text: 'Hi Priya! I've reviewed your application for UAE Tourist Visa. Everything looks great so far.',
+    text: "Hi Priya! I've reviewed your application for UAE Tourist Visa. Everything looks great so far.",
     type: 'incoming',
     time: '10:02 AM',
   },
@@ -42,7 +42,7 @@ const INITIAL_MESSAGES: Message[] = [
   },
   {
     id: '4',
-    text: 'Got it. I'll get a new one from the bank today.',
+    text: "Got it. I'll get a new one from the bank today.",
     type: 'outgoing',
     time: '10:07 AM',
   },
@@ -54,7 +54,7 @@ const INITIAL_MESSAGES: Message[] = [
   },
   {
     id: '6',
-    text: 'Perfect! Once you upload it, I'll immediately push your application to the embassy. Expected decision in 3–5 business days.',
+    text: "Perfect! Once you upload it, I'll immediately push your application to the embassy. Expected decision in 3–5 business days.",
     type: 'incoming',
     time: '10:08 AM',
   },

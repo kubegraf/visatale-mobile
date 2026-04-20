@@ -41,7 +41,7 @@ const CONVERSATIONS = [
     name: 'Sarah Chen',
     role: 'UK Visa Expert',
     avatar: '👩',
-    lastMsg: 'I'll follow up with the VFS center tomorrow morning.',
+    lastMsg: "I'll follow up with the VFS center tomorrow morning.",
     time: '3h ago',
     unread: 1,
     online: false,
